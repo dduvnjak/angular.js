@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# exit if no files changed
+[[ `git diff-index --cached --name-only HEAD` ]] || exit 0
+
+# run the unit tests
+grunt test:unit
+
+# stop the commit in case of failures
+if [[ $? != 0 ]]; then 
+	echo "Unit tests have failures. Stopping the commit"
+	exit 1
+fi;
